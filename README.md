@@ -18,7 +18,7 @@
 | 状態 | **GitHub Pages で一般公開した（2026-10-26 の #0006）。iOS アプリのプロジェクト・スクリーンショット・引き渡し手順もできた（#0005。ビルドは GitHub Actions で確認。App Store 申請はまだ）** |
 | 本体 | `index.html`（約230KB・3,400行。画面・推理エンジン・SVG アイコンまで1ファイル） |
 | ローカル確認 | http://127.0.0.1:8795/ （`思考力/.claude/launch.json` の `hosoku`。このフォルダで `python3 -m http.server 8795 --bind 127.0.0.1` でもよい） |
-| 開発確認用（Claude Artifact） | https://claude.ai/artifact/8WjqncLuFmwKUWvs8Yjr1c （2026-10-22 公開。#0003 まで反映） |
+| 開発確認用（Claude Artifact） | https://claude.ai/artifact/8WjqncLuFmwKUWvs8Yjr1c （2026-10-26 に最新の版で公開し直した。#0006 まで反映） |
 | 一般公開（GitHub Pages） | https://kiyotake1229.github.io/hosoku-hunter/ （2026-10-26 公開） |
 | サポートURL | https://kiyotake1229.github.io/hosoku-hunter/support.html （`support.html`。App Store のサポートURL・プライバシーポリシーは `#privacy`） |
 | お問い合わせ | https://github.com/kiyotake1229/hosoku-hunter/issues |
