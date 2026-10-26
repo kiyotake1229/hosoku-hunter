@@ -1,8 +1,18 @@
 {
-  "next_no": 6,
-  "total": 5,
-  "generated_at": "2026-10-26T22:52:02.201625",
+  "next_no": 7,
+  "total": 6,
+  "generated_at": "2026-10-26T22:58:34.053390",
   "documents": [
+    {
+      "no": 6,
+      "date": "2026-10-26",
+      "type": "DPL",
+      "category": "ALL",
+      "title": "GitHubPagesで公開とビルド確認",
+      "filename": "20261026_DPL_0006_ALL_GitHubPagesで公開とビルド確認.md",
+      "extension": "md",
+      "summary": "このフォルダを git リポジトリにして GitHub の公開リポジトリ `kiyotake1229/hosoku-hunter` に push し、main ブランチのルートを GitHub Pages で公開した（清武さんの依頼）。あわせて GitHub Actions の「iOS build check」で、iOS アプリがシミュレータ向け・実機向け（署名なし）ともにビルドできることを確かめ"
+    },
     {
       "no": 5,
       "date": "2026-10-26",

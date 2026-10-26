@@ -27,7 +27,7 @@
 | Bundle ID | `work.ltv.hosoku`（iOS アプリ。`ios-app/`） |
 | エンジンの版 | VERSION 3（版が変わると全員の問題が変わる） |
 | git | https://github.com/kiyotake1229/hosoku-hunter （public。main に push すると GitHub Pages に反映。親の `思考力/` のリポジトリでは `.gitignore` で外してある） |
-| iOS ビルド確認 | GitHub Actions の「iOS build check」（https://github.com/kiyotake1229/hosoku-hunter/actions ） |
+| iOS ビルド確認 | GitHub Actions の「iOS build check」（https://github.com/kiyotake1229/hosoku-hunter/actions ）。初回 2026-10-26 成功: https://github.com/kiyotake1229/hosoku-hunter/actions/runs/40334489457 （Xcode 26.6・シミュレータ向けと実機向けとも BUILD SUCCEEDED） |
 
 ## フォルダの中身
 
