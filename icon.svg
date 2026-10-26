@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- 法則ハンター アプリアイコンの元データ。
+       点の方眼の調査ノート（ダークの地の色）に、標本カードを2枚（奥 = 赤い丸、手前 = 青い三角。青は斜線の模様）と、
+       黄色い虫眼鏡。虫眼鏡のガラスの中は、下のカードとノートを少し大きく描く。アプリのロゴ（ホームの左上）と同じ組み合わせ。
+       角丸は付けない（OS が付ける）。四隅まで地の色で塗り、透明な部分は無い。
+       カード・虫眼鏡は中心から半径 400 以内に収め、マスク用（安全域 = 半径 409.6）でも欠けない。
+       文字（書体）は使わないので、書体の無い環境でも同じ絵になる。
+       PNG の書き出し: python3 tools/make-images.py icons -->
+  <title>法則ハンター</title>
+  <defs>
+    <radialGradient id="bg" cx="30%" cy="22%" r="95%">
+      <stop offset="0" stop-color="#2A3B32"/>
+      <stop offset=".5" stop-color="#1A2620"/>
+      <stop offset="1" stop-color="#0E1512"/>
+    </radialGradient>
+    <!-- 点の方眼（ノートの地。アプリの背景と同じ考え方） -->
+    <pattern id="dots" width="64" height="64" patternUnits="userSpaceOnUse">
+      <circle cx="32" cy="32" r="4" fill="#D6E8DE" fill-opacity=".13"/>
+    </pattern>
+    <!-- 青の斜線（アプリのカードの青と同じ模様） -->
+    <pattern id="stripe" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="22" height="22" fill="#2B5FC4"/>
+      <path d="M5 0V22" stroke="#4F7FDA" stroke-width="7"/>
+    </pattern>
+    <!-- カードの影（紙から少し浮く） -->
+    <filter id="lift" x="-20%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="10" dy="22" stdDeviation="16" flood-color="#030605" flood-opacity=".6"/>
+    </filter>
+    <filter id="liftS" x="-30%" y="-30%" width="170%" height="170%">
+      <feDropShadow dx="6" dy="14" stdDeviation="10" flood-color="#030605" flood-opacity=".55"/>
+    </filter>
+    <!-- 虫眼鏡のガラス（ほんの少し黄色く、左上が明るい） -->
+    <radialGradient id="glass" cx="34%" cy="30%" r="75%">
+      <stop offset="0" stop-color="#FFFBE6" stop-opacity=".30"/>
+      <stop offset=".55" stop-color="#F2D04B" stop-opacity=".06"/>
+      <stop offset="1" stop-color="#F2D04B" stop-opacity=".2"/>
+    </radialGradient>
+    <clipPath id="lens"><circle cx="522" cy="566" r="108"/></clipPath>
+
+    <!-- ノートとカード（虫眼鏡の中でも同じものを大きくして使う） -->
+    <g id="scene">
+      <rect width="1024" height="1024" fill="url(#bg)"/>
+      <rect width="1024" height="1024" fill="url(#dots)"/>
+      <!-- 奥のカード（赤い丸） -->
+      <g filter="url(#liftS)" transform="rotate(11 600 390)">
+        <rect x="474" y="196" width="268" height="376" rx="26" fill="#EEF2EC"/>
+        <rect x="474" y="196" width="268" height="376" rx="26" fill="none" stroke="#17211C" stroke-opacity=".18" stroke-width="4"/>
+        <circle cx="608" cy="384" r="78" fill="#D2412F"/>
+      </g>
+      <!-- 手前のカード（青い三角）= 標本カード。二重枠は標本ラベル -->
+      <g filter="url(#lift)" transform="rotate(-7 420 500)">
+        <rect x="252" y="250" width="336" height="470" rx="30" fill="#FBFCFA"/>
+        <rect x="252" y="250" width="336" height="470" rx="30" fill="none" stroke="#17211C" stroke-opacity=".2" stroke-width="4"/>
+        <rect x="274" y="272" width="292" height="426" rx="16" fill="none" stroke="#17211C" stroke-opacity=".16" stroke-width="3"/>
+        <path d="M420 372L530 564H310Z" fill="url(#stripe)" stroke="#2B5FC4" stroke-width="16" stroke-linejoin="round"/>
+      </g>
+    </g>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <!-- 絵の全体を少し下げて 1.07 倍に（中心から半径 400 以内） -->
+  <g transform="translate(512 512) scale(1.07) translate(-512 -487)">
+  <use href="#scene" xlink:href="#scene"/>
+
+  <!-- 虫眼鏡の柄（影・縁・本体） -->
+  <path d="M610 654L708 752" stroke="#030605" stroke-opacity=".5" stroke-width="84" stroke-linecap="round" transform="translate(8 16)"/>
+  <path d="M610 654L708 752" stroke="#B8951F" stroke-width="72" stroke-linecap="round"/>
+  <path d="M610 654L708 752" stroke="#F2D04B" stroke-width="52" stroke-linecap="round"/>
+  <path d="M628 662L690 724" stroke="#FFF1B0" stroke-opacity=".55" stroke-width="10" stroke-linecap="round"/>
+  <!-- 枠の影 -->
+  <circle cx="522" cy="566" r="108" fill="none" stroke="#030605" stroke-opacity=".45" stroke-width="48" transform="translate(7 14)"/>
+  <!-- ガラス: 下のノートとカードを 1.45 倍に -->
+  <g clip-path="url(#lens)">
+    <use href="#scene" xlink:href="#scene" transform="translate(522 566) scale(1.45) translate(-522 -566)"/>
+    <circle cx="522" cy="566" r="108" fill="url(#glass)"/>
+    <path d="M456 522a80 80 0 0 1 58-36" fill="none" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <!-- 枠 -->
+  <circle cx="522" cy="566" r="108" fill="none" stroke="#B8951F" stroke-width="46"/>
+  <circle cx="522" cy="566" r="108" fill="none" stroke="#F2D04B" stroke-width="36"/>
+  <path d="M434 508a100 100 0 0 1 62-48" fill="none" stroke="#FFF1B0" stroke-opacity=".6" stroke-width="8" stroke-linecap="round"/>
+  </g>
+</svg>

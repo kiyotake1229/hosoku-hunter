@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>法則ハンター OGP画像の元データ</title>
+<!-- ogp.png（1200×630、リンクを貼ったときのプレビュー画像）の元データ。
+     書き出し（このフォルダの親＝アプリのフォルダで実行）:
+       python3 tools/make-images.py ogp
+     手で書き出すとき（撮り終えても Chrome が終わらない環境では、ogp.png ができたら Ctrl+C で止める）:
+       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --mute-audio --hide-scrollbars \
+         --user-data-dir="$(mktemp -d)" --window-size=1200,630 --virtual-time-budget=10000 \
+         --force-device-scale-factor=1 --force-color-profile=srgb --screenshot="$PWD/ogp.png" "file://$PWD/tools/ogp.html"
+     色はアプリのダーク（夜の調査ノート）とライト（標本カードの紙）のトークンに合わせている。
+     右の調査ノートは遊んでいる途中の様子（日替わりの特定の日の問題ではない）（合う・合わないの山、のこる候補の減り方、発見、裏返しのカードと虫眼鏡）。
+     答えのルール（文）は描かない。カードの○×は、ある1つのルールに合うように並べてあるが、そのルールは書かない。
+     カードの絵はアプリ（index.html の cardSVG）と同じ作り: 数はサイコロの目の並び、赤 = 塗り・青 = 斜線・緑 = 点。 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Klee+One:wght@400;600&family=M+PLUS+2:wght@400;500;700;800&display=block">
+<style>
+  :root{
+    /* ダーク（夜の調査ノート） */
+    --bg-d:#0F1513; --dot-d:rgba(214,232,222,.09); --ink-d:#E6EDE8; --ink-d2:#B3C1B9; --ink-d3:#8E9D95;
+    --mark:#F2D04B; --mark-d:#E5C443; --mark-wash:rgba(242,208,75,.45); --mark-ink:#7A5600;
+    /* ライト（標本カードの紙） */
+    --paper:#FBFCFA; --paper-2:#F3F6F1; --paper-3:#E4E9E2; --ink:#17211C; --ink-2:#435049; --ink-3:#5F6B64;
+    --rule:rgba(23,33,28,.13); --rule-2:rgba(23,33,28,.26); --rule-3:rgba(23,33,28,.52);
+    --card:#FFFFFF; --card-edge:rgba(23,33,28,.22); --card-back:#24312B; --card-back-ink:#F2D04B;
+    --c-red:#D2412F; --c-blue:#2B5FC4; --c-green:#1F8A55;
+    --f-body:"M PLUS 2","Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;
+    --f-hand:"Klee One","Hiragino Maru Gothic ProN","M PLUS 2",sans-serif;
+    --f-mono:"Courier Prime",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:var(--bg-d)}
+  body{position:relative;font-family:var(--f-body);color:var(--ink-d);-webkit-font-smoothing:antialiased;
+    background-color:var(--bg-d);
+    background-image:radial-gradient(ellipse 820px 560px at 18% 22%,rgba(60,92,74,.42),transparent 70%),radial-gradient(var(--dot-d) 1.4px,transparent 2px);
+    background-size:auto,24px 24px;background-position:0 0,12px 12px}
+  #stage{position:absolute;inset:0;visibility:hidden}
+  #stage.ok{visibility:visible}
+  #ng{display:none;position:fixed;inset:0;background:#FF00FF;z-index:9}
+
+  /* 左: 題名と説明 */
+  .left{position:absolute;left:68px;top:62px;width:530px}
+  .eyebrow{display:flex;align-items:center;gap:12px;margin:0 0 22px;font-family:var(--f-mono);font-weight:700;font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-d3)}
+  .eyebrow i{display:block;width:34px;height:3px;background:var(--mark)}
+  .brand{display:flex;align-items:center;gap:20px}
+  .logo{width:84px;height:84px;flex:none;filter:drop-shadow(0 10px 18px rgba(0,0,0,.5))}
+  h1{margin:0;font-family:var(--f-hand);font-weight:600;font-size:68px;white-space:nowrap;line-height:1.05;letter-spacing:.06em;color:var(--ink-d);text-shadow:0 4px 30px rgba(0,0,0,.5)}
+  .sub{display:inline-block;z-index:0;margin:28px 0 0;font-family:var(--f-hand);font-weight:600;font-size:34px;letter-spacing:.06em;color:#17211C;position:relative;padding:0 12px}
+  .sub::before{content:"";position:absolute;left:0;right:0;top:14%;bottom:4%;background:var(--mark);transform:skewX(-8deg) rotate(-1.2deg);z-index:-1;border-radius:2px}
+  .sub span{position:relative}
+  .tag{margin:24px 0 0;font-size:22px;line-height:1.7;color:var(--ink-d2);letter-spacing:.02em}
+  .tag b{color:var(--ink-d);font-weight:700}
+  .chips{position:absolute;left:68px;top:478px;display:flex;gap:10px}
+  .chip{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:700;color:var(--ink-d);letter-spacing:.04em;
+    padding:8px 16px 8px 12px;border-radius:4px;background:rgba(15,21,19,.82);border:1.5px solid rgba(214,232,222,.28)}
+  .chip svg{width:20px;height:20px;fill:none;stroke:var(--mark);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .url{position:absolute;left:70px;top:552px;font-family:var(--f-mono);font-weight:700;font-size:19px;letter-spacing:.04em;color:var(--ink-d3)}
+
+  /* 右: 調査ノート（標本ラベルの二重枠） */
+  .sheet{position:absolute;left:650px;top:46px;width:500px;height:520px;background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:4px;
+    transform:rotate(1.6deg);box-shadow:0 2px 0 rgba(0,0,0,.2),0 30px 50px -20px rgba(0,0,0,.85);
+    background-image:radial-gradient(rgba(28,40,34,.12) 1px,transparent 1.5px);background-size:18px 18px;background-position:9px 9px}
+  .sheet::before{content:"";position:absolute;inset:6px;border:1px solid var(--rule-2);border-radius:2px;pointer-events:none}
+  .pin{position:absolute;top:-11px;left:36px;width:22px;height:22px;border-radius:50%;background:var(--mark);box-shadow:inset -3px -4px 0 rgba(0,0,0,.18),0 4px 6px -1px rgba(0,0,0,.45)}
+  .pin::after{content:"";position:absolute;left:6px;top:4px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.7)}
+  .sh-head{position:absolute;left:26px;right:26px;top:24px;display:flex;align-items:flex-end;justify-content:space-between}
+  .sh-head .k{font-family:var(--f-mono);font-weight:700;font-size:14px;letter-spacing:.18em;color:var(--ink-3)}
+  .sh-head h2{margin:2px 0 0;font-family:var(--f-hand);font-weight:600;font-size:30px;letter-spacing:.04em;line-height:1.1}
+  .diff{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--ink-2)}
+  .diff svg{width:20px;height:20px}
+  .diff .on{fill:var(--ink)} .diff .off{fill:none;stroke:var(--ink-3);stroke-width:1.6}
+
+  /* のこる候補 */
+  .meter{position:absolute;left:26px;right:26px;top:96px;padding:12px 16px 12px;border:1.5px solid var(--ink);border-radius:3px;background:var(--paper)}
+  .meter::after{content:"";position:absolute;inset:3px;border:1px solid var(--rule);pointer-events:none}
+  .mt-row{display:flex;align-items:baseline;gap:8px}
+  .mt-k{font-size:15px;font-weight:700;color:var(--ink-2)}
+  .mt-n{font-family:var(--f-mono);font-weight:700;font-size:44px;line-height:1}
+  .mt-u{font-size:15px;color:var(--ink-2)}
+  .mt-one{margin-left:auto;font-family:var(--f-hand);font-weight:600;font-size:20px;position:relative;padding:0 6px;white-space:nowrap}
+  .mt-one::before{content:"";position:absolute;left:0;right:0;top:40%;bottom:2%;background:var(--mark);transform:skewX(-8deg);z-index:0}
+  .mt-one span{position:relative}
+  .mt-bar{height:10px;margin:10px 0 8px;border-radius:2px;background:var(--paper-3);position:relative;overflow:hidden}
+  .mt-bar i{position:absolute;left:0;top:0;bottom:0;width:4%;background:var(--mark-ink);border-radius:0 2px 2px 0}
+  .mt-path{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-weight:700;font-size:17px;color:var(--ink-3)}
+  .mt-path b{color:var(--ink)}
+  .mt-path em{font-style:normal;color:var(--ink-3);font-size:14px}
+
+  /* 合う・合わないの山 */
+  .piles{position:absolute;left:26px;right:26px;top:226px;display:grid;grid-template-columns:1.48fr 1fr;gap:12px}
+  .pile{padding:10px 10px 12px;border-radius:4px;border:1px solid var(--rule-2);background:var(--paper)}
+  .pile.ok{border-top:3px solid var(--ink)}
+  .pile.ng{border-top:3px dashed var(--rule-3)}
+  .pile h3{display:flex;align-items:center;gap:6px;margin:0 0 8px 2px;font-size:16px;font-weight:800}
+  .pile h3 svg{width:22px;height:22px;fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round}
+  .pile ul{list-style:none;margin:0;padding:0;display:flex;gap:9px}
+  .sc{position:relative;display:block;width:76px;aspect-ratio:60/84;background:var(--card);border:1px solid var(--card-edge);border-radius:7px;box-shadow:0 1px 0 rgba(0,0,0,.05),0 5px 9px -6px rgba(0,0,0,.4)}
+  .sc > svg{display:block;width:100%;height:100%}
+  .sc .tagn{position:absolute;left:-6px;top:-8px;min-width:22px;height:20px;padding:0 5px;border-radius:3px;background:var(--ink);color:var(--paper);font-family:var(--f-mono);font-weight:700;font-size:12px;line-height:20px;text-align:center}
+  .sc .tagn.ex{background:var(--paper-3);color:var(--ink-2)}
+  .sc .fd{position:absolute;right:-6px;bottom:-8px;padding:0 6px;border-radius:2px;background:var(--mark);color:#2A2200;font-size:12px;font-weight:800;line-height:19px}
+  .sh{stroke-width:1.6}
+  .sh-red{fill:var(--c-red);stroke:var(--c-red)}
+  .sh-blue{fill:url(#pt-blue);stroke:var(--c-blue)}
+  .sh-green{fill:url(#pt-green);stroke:var(--c-green)}
+
+  /* 次に調べるカード（裏返し）と虫眼鏡 */
+  .next{position:absolute;left:30px;top:418px;display:flex;align-items:center;gap:16px}
+  .back{width:58px;height:81px;border-radius:7px;background:var(--card-back);display:grid;place-items:center;transform:rotate(-6deg);box-shadow:0 6px 10px -6px rgba(0,0,0,.6)}
+  .back b{font-family:var(--f-mono);font-weight:700;font-size:36px;color:var(--card-back-ink)}
+  .next p{margin:0;font-family:var(--f-hand);font-weight:600;font-size:21px;line-height:1.45;color:var(--ink-2)}
+  .next p b{color:var(--ink)}
+  .lens{position:absolute;left:356px;top:384px;width:150px;height:150px;transform:rotate(-8deg);filter:drop-shadow(0 10px 14px rgba(0,0,0,.45))}
+
+  /* 発見！の判 */
+  .found{position:absolute;left:792px;top:262px;z-index:3;transform:rotate(-8deg);font-family:var(--f-hand);font-weight:600;font-size:34px;color:var(--ink);padding:0 16px;letter-spacing:.06em}
+  .found::before{content:"";position:absolute;left:2px;right:2px;top:38%;bottom:4%;background:var(--mark);transform:skewX(-8deg);z-index:-1}
+  .rays{position:absolute;left:772px;top:226px;width:170px;height:120px;z-index:2}
+  .rays line{stroke:var(--ink);stroke-width:3.5;stroke-linecap:round}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="pt-blue" width="4.2" height="4.2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M1 0V4.2" stroke="#2B5FC4" stroke-width="1.5"/></pattern>
+    <pattern id="pt-green" width="4.6" height="4.6" patternUnits="userSpaceOnUse"><circle cx="1.15" cy="1.15" r="1.05" fill="#1F8A55"/><circle cx="3.45" cy="3.45" r="1.05" fill="#1F8A55"/></pattern>
+    <symbol id="star" viewBox="0 0 24 24"><path d="M12 3.2l2.6 5.6 6.1.7-4.5 4.2 1.2 6.1L12 16.8l-5.4 3 1.2-6.1L3.3 9.5l6.1-.7z"/></symbol>
+  </defs>
+</svg>
+<div id="stage">
+  <div class="left">
+    <p class="eyebrow"><i></i>Daily rule hunt</p>
+    <div class="brand">
+      <!-- アプリのロゴ（index.html のホーム左上と同じ形） -->
+      <svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="45" height="45" rx="7" fill="#17211C" stroke="rgba(230,237,232,.26)"/>
+        <rect x="9" y="8" width="21" height="29" rx="2.5" fill="#FBFCFA"/>
+        <path d="M19.5 13.5l6 10.4h-12z" fill="#2B5FC4"/>
+        <circle cx="29" cy="29" r="8.6" fill="none" stroke="#F2D04B" stroke-width="3.6"/>
+        <path d="M35.2 35.2l6 6" stroke="#F2D04B" stroke-width="4.4" stroke-linecap="round"/>
+      </svg>
+      <h1>法則ハンター</h1>
+    </div>
+    <p class="sub"><span>カードに隠れたルールを見抜け</span></p>
+    <p class="tag">色・形・数のカードを<b>自分で作って試す</b>、日替わりの仮説検証パズル。予想が外れたら「発見」。候補をしぼって、ルールを言い当てよう。</p>
+  </div>
+  <div class="chips">
+    <span class="chip"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="1.5"/><path d="M4 9.5h16M8.5 3v4M15.5 3v4"/></svg>毎日1問</span>
+    <span class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>登録なし・無料</span>
+    <span class="chip"><svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>記録は端末の中</span>
+  </div>
+  <p class="url">kiyotake1229.github.io/hosoku-hunter</p>
+
+  <div class="sheet">
+    <span class="pin"></span>
+    <div class="sh-head">
+      <div><p class="k" style="margin:0">FIELD NOTE</p><h2>隠れたルールは？</h2></div>
+      <span class="diff">難しさ<svg viewBox="0 0 24 24"><use href="#star" class="on"/></svg><svg viewBox="0 0 24 24"><use href="#star" class="on"/></svg><svg viewBox="0 0 24 24"><use href="#star" class="off"/></svg></span>
+    </div>
+    <div class="meter">
+      <div class="mt-row"><span class="mt-k">のこる候補</span><b class="mt-n">1</b><span class="mt-u">通り</span><span class="mt-one"><span>1つに絞れた</span></span></div>
+      <div class="mt-bar"><i></i></div>
+      <div class="mt-path"><em>はじめ</em><b>99</b>→<b>18</b>→<b>5</b>→<b>1</b><em style="margin-left:auto">調べ 3回</em></div>
+    </div>
+    <div class="piles">
+      <div class="pile ok"><h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/></svg>合う</h3><ul id="okPile"></ul></div>
+      <div class="pile ng"><h3><svg viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>合わない</h3><ul id="ngPile"></ul></div>
+    </div>
+    <div class="next">
+      <div class="back"><b>?</b></div>
+      <p>次は、どのカードで<br><b>確かめる？</b></p>
+    </div>
+    <svg class="lens" viewBox="0 0 150 150" aria-hidden="true">
+      <circle cx="62" cy="62" r="44" fill="rgba(255,250,225,.22)"/>
+      <path d="M95 95l38 38" stroke="#B8951F" stroke-width="22" stroke-linecap="round"/>
+      <path d="M95 95l38 38" stroke="#F2D04B" stroke-width="15" stroke-linecap="round"/>
+      <circle cx="62" cy="62" r="44" fill="none" stroke="#B8951F" stroke-width="15"/>
+      <circle cx="62" cy="62" r="44" fill="none" stroke="#F2D04B" stroke-width="11"/>
+      <path d="M36 50a30 30 0 0 1 22-20" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <svg class="rays" viewBox="0 0 170 120" aria-hidden="true">
+    <line x1="22" y1="44" x2="8" y2="30"/><line x1="128" y1="30" x2="140" y2="14"/><line x1="152" y1="52" x2="166" y2="44"/>
+  </svg>
+  <div class="found">発見！</div>
+</div>
+<div id="ng"></div>
+<script>
+  // カードの絵（index.html の SPOTS・SCALE・shapeSVG・cardSVG と同じ作り）
+  var SPOTS = { 1: [[30, 42]], 2: [[30, 24], [30, 60]], 3: [[17, 20], [30, 42], [43, 64]], 4: [[17.5, 26], [42.5, 26], [17.5, 58], [42.5, 58]], 5: [[16.5, 19], [43.5, 19], [30, 42], [16.5, 65], [43.5, 65]] };
+  var SCALE = { 1: 1.75, 2: 1.4, 3: 1.12, 4: 1.12, 5: 1 };
+  function r2(v) { return Math.round(v * 100) / 100; }
+  function shape(s, x, y, cls, k) {
+    if (s === 'circle') return '<circle class="' + cls + '" cx="' + x + '" cy="' + y + '" r="' + r2(8.6 * k) + '"/>';
+    if (s === 'square') return '<rect class="' + cls + '" x="' + r2(x - 8 * k) + '" y="' + r2(y - 8 * k) + '" width="' + r2(16 * k) + '" height="' + r2(16 * k) + '" rx="1.2"/>';
+    return '<path class="' + cls + '" d="M' + x + ' ' + r2(y - 9.4 * k) + 'L' + r2(x + 10.2 * k) + ' ' + r2(y + 8 * k) + 'H' + r2(x - 10.2 * k) + 'Z"/>';
+  }
+  function card(c, s, n, tag, ex, found) {
+    var k = SCALE[n];
+    return '<li><span class="sc"><svg viewBox="0 0 60 84">' + SPOTS[n].map(function (p) { return shape(s, p[0], p[1], 'sh sh-' + c, k); }).join('') + '</svg>' +
+      '<span class="tagn' + (ex ? ' ex' : '') + '">' + tag + '</span>' + (found ? '<span class="fd">発見</span>' : '') + '</span></li>';
+  }
+  // 合う・合わないの並び（ある1つのルールに合うように並べてある。ルールの文は書かない）
+  document.getElementById('okPile').innerHTML = card('red', 'circle', 2, '例', true) + card('blue', 'triangle', 4, '2', false, true) + card('green', 'square', 2, '3');
+  document.getElementById('ngPile').innerHTML = card('green', 'circle', 3, '例', true) + card('blue', 'square', 2, '1');
+
+  // 書体を読み終えてから見せる（読めなければ赤紫にして、書き出しの検査で止める）
+  Promise.all([
+    document.fonts.load("600 68px 'Klee One'", '法則ハンターカードに隠れたルールを見抜け隠れたルールは？1つに絞れた次は、どのカードで確かめる？発見！'),
+    document.fonts.load("400 23px 'M PLUS 2'", '色・形・数のカードを自分で作って試す、日替わりの仮説検証パズル。予想が外れたら「発見」。候補をしぼって、ルールを言い当てよう。'),
+    document.fonts.load("700 17px 'M PLUS 2'", '毎日1問登録なし・無料記録は端末の中難しさのこる候補通り合う合わない'),
+    document.fonts.load("800 16px 'M PLUS 2'", '合う合わない発見'),
+    document.fonts.load("700 44px 'Courier Prime'", '0123456789 FIELD NOTE Daily rule hunt kiyotake1229.github.io/hosoku-hunter ?'),
+  ]).then(function () {
+    if (document.fonts.check("600 68px 'Klee One'", '法') && document.fonts.check("400 23px 'M PLUS 2'", '色') && document.fonts.check("700 44px 'Courier Prime'", '9')) {
+      document.getElementById('stage').className = 'ok';
+    } else {
+      document.getElementById('ng').style.display = 'block';
+    }
+  }, function () { document.getElementById('ng').style.display = 'block'; });
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "appId": "work.ltv.hosoku",
+  "appName": "法則ハンター",
+  "webDir": "www",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#ECEFEA",
+    "preferredContentMode": "mobile"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "iconColor": "#F2D04B"
+    },
+    "StatusBar": {
+      "overlaysWebView": true,
+      "style": "DEFAULT"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "./",
+  "name": "法則ハンター",
+  "short_name": "法則ハンター",
+  "description": "毎日1問届く、日替わりの仮説検証パズル。色・形・数のカードを自分で作って試し、隠れたルールを見抜こう。",
+  "lang": "ja",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ECEFEA",
+  "theme_color": "#ECEFEA",
+  "categories": ["games", "entertainment", "education"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

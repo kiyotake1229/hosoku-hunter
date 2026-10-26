@@ -1,0 +1,25 @@
+{
+  "name": "hosoku-ios",
+  "version": "1.0.0",
+  "private": true,
+  "description": "法則ハンター 毎日1問の仮説検証パズル iOSアプリ (Capacitorラッパー)",
+  "scripts": {
+    "sync-web": "bash sync-web.sh",
+    "sync": "npm run sync-web && npx cap sync ios",
+    "open": "npx cap open ios",
+    "icons": "npx @capacitor/assets generate --ios --iconBackgroundColor '#1E2B25' --iconBackgroundColorDark '#1E2B25' --splashBackgroundColor '#ECEFEA' --splashBackgroundColorDark '#0F1513'"
+  },
+  "dependencies": {
+    "@capacitor/app": "^7.1.2",
+    "@capacitor/core": "^7.6.9",
+    "@capacitor/haptics": "^7.0.5",
+    "@capacitor/ios": "^7.6.9",
+    "@capacitor/local-notifications": "^7.0.7",
+    "@capacitor/preferences": "^7.0.4",
+    "@capacitor/status-bar": "^7.0.6"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.6.9"
+  }
+}

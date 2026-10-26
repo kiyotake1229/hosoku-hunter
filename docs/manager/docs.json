@@ -1,0 +1,57 @@
+{
+  "next_no": 6,
+  "total": 5,
+  "generated_at": "2026-10-26T22:52:02.201625",
+  "documents": [
+    {
+      "no": 5,
+      "date": "2026-10-26",
+      "type": "NEW",
+      "category": "IOS",
+      "title": "iOSアプリ化",
+      "filename": "20261026_NEW_0005_IOS_iOSアプリ化.md",
+      "extension": "md",
+      "summary": "Web アプリ本体（`index.html`）をそのまま同梱する iOS アプリのプロジェクト `ios-app/` を、段取り名人の `ios-app/` と同じ形で Capacitor 7 で作った。Bundle ID は `work.ltv.hosoku`、表示名は「法則ハンター」、iPhone・縦向きのみ。`index.html` が使う5つのプラグイン（App・Haptics・Local"
+    },
+    {
+      "no": 4,
+      "date": "2026-10-26",
+      "type": "NEW",
+      "category": "ALL",
+      "title": "PWA化と公開用の素材とネイティブ連携",
+      "filename": "20261026_NEW_0004_ALL_PWA化と公開用の素材とネイティブ連携.md",
+      "extension": "md",
+      "summary": "一般公開（GitHub Pages: https://kiyotake1229.github.io/hosoku-hunter/ ）と iOS アプリ化（Capacitor・Bundle ID `work.ltv.hosoku`）に向けて、段取り名人と同じ作りで素材と仕組みをそろえた。ホーム画面に追加でき、一度開けば通信なしで遊べる（PWA）。iOS アプリの中では、触覚・記録の二重保存・毎朝の通"
+    },
+    {
+      "no": 3,
+      "date": "2026-10-21",
+      "type": "BUG",
+      "category": "ALL",
+      "title": "点検で見つかった不具合の修正",
+      "filename": "20261021_BUG_0003_ALL_点検で見つかった不具合の修正.md",
+      "extension": "md",
+      "summary": "公開前の点検（コードレビュー16件・遊んでの確認）で見つかった不具合を、まず再現してから直した。あわせて、直した種類の不具合を見つける検査を足した: `tools/check-app.mjs` に「答えだけが違う同じ形の問題で同じ画面になるか」・連続日数の順番・別のタブ、新しく `tools/check-ui.mjs`（Chrome の画面なしモードで画面を実際に動かす）。どの検査も、わざと不具合"
+    },
+    {
+      "no": 2,
+      "date": "2026-10-21",
+      "type": "ENH",
+      "category": "ENG",
+      "title": "点数と判定と答えの集まりの見直し",
+      "filename": "20261021_ENH_0002_ENG_点数と判定と答えの集まりの見直し.md",
+      "extension": "md",
+      "summary": "点検（コードレビューと、遊んでの確認）で、「★1 の答えが6通りしかなく、例の2枚と図鑑の箱の数で答えの型が分かる」「候補が2つ以上のまま判定に進むと、判定の5枚の顔ぶれから答えが推測できる」「調べずに判定へ進んでも★3 が取れる」「調査力が判定に進んだときの残りを数えない」と指摘された。答えの集まり・判定の5枚の選び方・結果の★・調査力・日替わりの並べ方を見直し、エンジンの **VERSION "
+    },
+    {
+      "no": 1,
+      "date": "2026-10-20",
+      "type": "DOC",
+      "category": "ALL",
+      "title": "現状の仕様と構成",
+      "filename": "20261020_DOC_0001_ALL_現状の仕様と構成.md",
+      "extension": "md",
+      "summary": "「法則ハンター」の docs 管理を始めた時点（Web 版の試作ができた時点）の、遊びの決まり・推理エンジン・画面・保存・検査をまとめる。文脈のない人（または AI）がこれだけ読んで、何がどこにあり、どういう決まりで動いているかを再現できることを目指す。"
+    }
+  ]
+}
